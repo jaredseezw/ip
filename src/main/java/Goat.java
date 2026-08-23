@@ -53,6 +53,16 @@ public class Goat {
                 for (int i = 0; i < taskCount; i++) {
                     System.out.println((i + 1) + "." + tasks[i]);
                 }
+            } else if (command.startsWith("mark ")) {
+                int taskIndex = Integer.parseInt(command.substring(5).trim()) - 1;
+                tasks[taskIndex].markAsDone();
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("  " + tasks[taskIndex]);
+            } else if (command.startsWith("unmark ")) {
+                int taskIndex = Integer.parseInt(command.substring(7).trim()) - 1;
+                tasks[taskIndex].markAsNotDone();
+                System.out.println("OK, I've marked this task as not done yet:");
+                System.out.println("  " + tasks[taskIndex]);
             } else if (command.startsWith("todo ")) {
                 tasks[taskCount] = new Todo(command.substring(5).trim());
                 taskCount++;

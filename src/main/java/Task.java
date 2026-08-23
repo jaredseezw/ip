@@ -3,6 +3,7 @@
  */
 public abstract class Task {
     protected String description;
+    protected boolean isDone;
 
     /**
      * Creates a task with the given description.
@@ -11,10 +12,34 @@ public abstract class Task {
      */
     public Task(String description) {
         this.description = description;
+        this.isDone = false;
+    }
+
+    /**
+     * Returns the icon that represents the task's completion status.
+     *
+     * @return {@code X} if the task is done, or a space otherwise
+     */
+    public String getStatusIcon() {
+        return isDone ? "X" : " ";
+    }
+
+    /**
+     * Marks this task as completed.
+     */
+    public void markAsDone() {
+        isDone = true;
+    }
+
+    /**
+     * Marks this task as not completed.
+     */
+    public void markAsNotDone() {
+        isDone = false;
     }
 
     @Override
     public String toString() {
-        return "[ ] " + description;
+        return "[" + getStatusIcon() + "] " + description;
     }
 }
