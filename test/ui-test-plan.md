@@ -73,3 +73,57 @@ ____________________________________________________________
 Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## Test case: Add and list task types
+
+### Aim
+
+Verify that Level 3 adds todos, deadlines, and events and lists them in insertion order.
+
+### Commands
+
+```text
+todo borrow book
+deadline return book /by Sunday
+event project meeting /from Mon 2pm /to 4pm
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+  ____             _
+ / ___| ___   __ _| |_
+| |  _ / _ \ / _` | __|
+| |_| | (_) | (_| | |_
+ \____|\___/ \__,_|\__|
+Hello! I'm Goat.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] borrow book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] return book (by: Sunday)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] project meeting (from: Mon 2pm to: 4pm)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] borrow book
+2.[D][ ] return book (by: Sunday)
+3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
