@@ -1,12 +1,12 @@
 /**
- * Represents a task in the task list.
+ * Represents a task and whether it has been completed.
  */
 public abstract class Task {
     protected String description;
     protected boolean isDone;
 
     /**
-     * Creates a task with the given description.
+     * Creates an incomplete task with the given description.
      *
      * @param description description of the task
      */
@@ -38,6 +38,11 @@ public abstract class Task {
         isDone = false;
     }
 
+    /**
+     * Returns the task in the format used when displaying task lists.
+     *
+     * @return the status icon followed by the task description
+     */
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
