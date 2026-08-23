@@ -116,6 +116,105 @@ Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
 
+## Test case: Delete tasks and preserve list state
+
+### Aim
+
+Verify deletion of middle, first, last, and sole tasks, including renumbering, relative order, and preservation of completion state.
+
+### Commands
+
+```text
+todo first task
+deadline second task /by Friday
+event third task /from Monday /to Tuesday
+todo fourth task
+mark 2
+delete 3
+list
+delete 1
+list
+delete 2
+delete 1
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+  ____             _
+ / ___| ___   __ _| |_
+| |  _ / _ \ / _` | __|
+| |_| | (_) | (_| | |_
+ \____|\___/ \__,_|\__|
+Hello! I'm Goat.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] first task
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] second task (by: Friday)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] third task (from: Monday to: Tuesday)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] fourth task
+Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [D][X] second task (by: Friday)
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [E][ ] third task (from: Monday to: Tuesday)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] first task
+2.[D][X] second task (by: Friday)
+3.[T][ ] fourth task
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [T][ ] first task
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][X] second task (by: Friday)
+2.[T][ ] fourth task
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [T][ ] fourth task
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [D][X] second task (by: Friday)
+Now you have 0 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
 ## Test case: Recover from incorrect inputs
 
 ### Aim
@@ -127,6 +226,7 @@ Verify that empty and unknown commands, incomplete task details, and invalid tas
 ```text
 
 mark 1
+delete 1
 todo
 todo read book
 deadline submit assignment
@@ -142,6 +242,10 @@ mark
 mark two
 mark 0
 mark 4
+delete
+delete two
+delete 0
+delete 4
 mark 1
 unmark 1
 blah
@@ -163,6 +267,9 @@ What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! Please enter a command.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! There are no tasks in the list yet.
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! There are no tasks in the list yet.
@@ -219,6 +326,18 @@ ____________________________________________________________
 OOPS!!! Task 4 does not exist. Choose a number from 1 to 3.
 ____________________________________________________________
 ____________________________________________________________
+OOPS!!! Please specify a task number. Try: delete <task number>
+____________________________________________________________
+____________________________________________________________
+OOPS!!! The task number must be a positive whole number.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! Task 0 does not exist. Choose a number from 1 to 3.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! Task 4 does not exist. Choose a number from 1 to 3.
+____________________________________________________________
+____________________________________________________________
 Nice! I've marked this task as done:
   [T][X] read book
 ____________________________________________________________
@@ -227,7 +346,7 @@ OK, I've marked this task as not done yet:
   [T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, or bye.
+OOPS!!! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, delete, or bye.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
