@@ -32,6 +32,9 @@ public class Goat {
                 System.out.println(separator);
                 break;
             }
+            System.out.println(separator);
+            System.out.println(command);
+            System.out.println(separator);
         }
     }
 }
