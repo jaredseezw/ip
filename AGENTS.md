@@ -33,3 +33,12 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 Do not commit or push unless explicitly asked.
+
+## Console UI regression testing
+
+After each code update:
+
+1. Review `test/ui-test-plan.md` and update its test cases or configuration when the change affects commands, expected console output, or relevant application behavior.
+2. Invoke the project-specific `test-ui` skill and run the complete UI test plan. Stop at the first failed case and report its actual and expected output.
+
+The requirement to invoke `test-ui` applies even when the code change does not require a test-plan edit. It does not apply to documentation-only or configuration-only updates that do not change code.
