@@ -12,6 +12,16 @@ public class Todo extends Task {
     }
 
     /**
+     * Returns this todo in the data-file format.
+     *
+     * @return serialized todo data
+     */
+    @Override
+    public String toFileString() {
+        return formatFileData("T");
+    }
+
+    /**
      * Returns the todo with its type and completion status.
      *
      * @return formatted todo

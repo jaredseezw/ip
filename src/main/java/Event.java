@@ -19,6 +19,16 @@ public class Event extends Task {
     }
 
     /**
+     * Returns this event in the data-file format.
+     *
+     * @return serialized event data
+     */
+    @Override
+    public String toFileString() {
+        return formatFileData("E", from, to);
+    }
+
+    /**
      * Returns the event with its type, completion status, and time range.
      *
      * @return formatted event

@@ -2,6 +2,8 @@
 
 This plan is the source of truth for fail-fast console UI testing. Each test case runs in a fresh application process, and its expected output is compared exactly with stdout.
 
+Each case uses an isolated working directory so saved tasks cannot leak into later cases. File writing, loading, and storage failures are checked separately by `test/test_storage.py`, because this plan compares one session's console output only.
+
 ## Configuration
 
 - Source directory: `src/main/java`
