@@ -39,6 +39,22 @@ public abstract class Task {
     }
 
     /**
+     * Returns the numeric completion value used in the data file.
+     *
+     * @return {@code 1} if the task is done, or {@code 0} otherwise
+     */
+    protected int getFileStatus() {
+        return isDone ? 1 : 0;
+    }
+
+    /**
+     * Returns a representation of this task suitable for saving to disk.
+     *
+     * @return serialized task data
+     */
+    public abstract String toFileString();
+
+    /**
      * Returns the task in the format used when displaying task lists.
      *
      * @return the status icon followed by the task description

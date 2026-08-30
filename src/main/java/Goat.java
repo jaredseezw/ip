@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -8,6 +10,7 @@ import java.util.regex.Pattern;
  * Runs the Goat console application and manages its in-memory task list.
  */
 public class Goat {
+    private static final Path DATA_FILE_PATH = Path.of("data", "goat.txt");
     private static final Pattern DEADLINE_ARGUMENTS =
             Pattern.compile("^(.*?)\\s*/by(?:\\s+(.*))?$");
     private static final Pattern EVENT_ARGUMENTS =
@@ -64,8 +67,9 @@ public class Goat {
      * @param tasks task storage
      * @param task task to add
      */
-    private static void addTask(List<Task> tasks, Task task) {
+    private static void addTask(List<Task> tasks, Task task, Storage storage) throws IOException {
         tasks.add(task);
+        storage.save(tasks);
         printTaskAdded(task, tasks.size());
     }
 
@@ -84,8 +88,9 @@ public class Goat {
      *
      * @param args command-line arguments, which are not used
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         List<Task> tasks = new ArrayList<>();
+        Storage storage = new Storage(DATA_FILE_PATH);
         String separator = "____________________________________________________________";
         String banner = "  ____             _\n"
                 + " / ___| ___   __ _| |_\n"
@@ -134,18 +139,21 @@ public class Goat {
                 case MARK:
                     int markIndex = parseTaskIndex(argument, tasks.size(), commandWord);
                     tasks.get(markIndex).markAsDone();
+                    storage.save(tasks);
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println("  " + tasks.get(markIndex));
                     break;
                 case UNMARK:
                     int unmarkIndex = parseTaskIndex(argument, tasks.size(), commandWord);
                     tasks.get(unmarkIndex).markAsNotDone();
+                    storage.save(tasks);
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println("  " + tasks.get(unmarkIndex));
                     break;
                 case DELETE:
                     int deleteIndex = parseTaskIndex(argument, tasks.size(), commandWord);
                     Task deletedTask = tasks.remove(deleteIndex);
+                    storage.save(tasks);
                     System.out.println("Noted. I've removed this task:");
                     System.out.println("  " + deletedTask);
                     System.out.println("Now you have " + tasks.size() + " tasks in the list.");
@@ -154,7 +162,7 @@ public class Goat {
                     if (argument.isEmpty()) {
                         throw new GoatException("A todo needs a description. Try: todo <description>");
                     }
-                    addTask(tasks, new Todo(argument));
+                    addTask(tasks, new Todo(argument), storage);
                     break;
                 case DEADLINE:
                     Matcher deadlineMatcher = DEADLINE_ARGUMENTS.matcher(argument);
@@ -169,7 +177,7 @@ public class Goat {
                     if (by.isEmpty()) {
                         throw new GoatException("A deadline needs a date or time after /by.");
                     }
-                    addTask(tasks, new Deadline(description, by));
+                    addTask(tasks, new Deadline(description, by), storage);
                     break;
                 case EVENT:
                     Matcher eventMatcher = EVENT_ARGUMENTS.matcher(argument);
@@ -189,7 +197,7 @@ public class Goat {
                     if (to.isEmpty()) {
                         throw new GoatException("An event needs an end time after /to.");
                     }
-                    addTask(tasks, new Event(eventDescription, from, to));
+                    addTask(tasks, new Event(eventDescription, from, to), storage);
                     break;
                 case UNKNOWN:
                     throw unknownCommandException();

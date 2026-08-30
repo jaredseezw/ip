@@ -16,6 +16,16 @@ public class Deadline extends Task {
     }
 
     /**
+     * Returns this deadline in the data-file format.
+     *
+     * @return serialized deadline data
+     */
+    @Override
+    public String toFileString() {
+        return "D | " + getFileStatus() + " | " + description + " | " + by;
+    }
+
+    /**
      * Returns the deadline with its type, completion status, and due date.
      *
      * @return formatted deadline
