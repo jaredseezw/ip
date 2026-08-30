@@ -18,7 +18,7 @@ public class Todo extends Task {
      */
     @Override
     public String toFileString() {
-        return "T | " + getFileStatus() + " | " + description;
+        return formatFileData("T");
     }
 
     /**

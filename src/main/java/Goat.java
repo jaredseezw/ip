@@ -69,8 +69,25 @@ public class Goat {
      */
     private static void addTask(List<Task> tasks, Task task, Storage storage) throws IOException {
         tasks.add(task);
-        storage.save(tasks);
+        try {
+            storage.save(tasks);
+        } catch (IOException exception) {
+            tasks.remove(tasks.size() - 1);
+            throw exception;
+        }
         printTaskAdded(task, tasks.size());
+    }
+
+    /**
+     * Prints a storage warning within the same separator style as command responses.
+     *
+     * @param message warning to display
+     * @param separator line surrounding the warning
+     */
+    private static void printStorageWarning(String message, String separator) {
+        System.out.println(separator);
+        System.out.println("OOPS!!! " + message);
+        System.out.println(separator);
     }
 
     /**
@@ -88,9 +105,17 @@ public class Goat {
      *
      * @param args command-line arguments, which are not used
      */
-    public static void main(String[] args) throws IOException {
-        List<Task> tasks = new ArrayList<>();
+    public static void main(String[] args) {
         Storage storage = new Storage(DATA_FILE_PATH);
+        List<Task> tasks;
+        String loadWarning = null;
+        try {
+            tasks = storage.load();
+        } catch (IOException | GoatException exception) {
+            tasks = new ArrayList<>();
+            loadWarning = "I couldn't load saved tasks: " + exception.getMessage()
+                    + " Starting with an empty task list.";
+        }
         String separator = "____________________________________________________________";
         String banner = "  ____             _\n"
                 + " / ___| ___   __ _| |_\n"
@@ -103,6 +128,9 @@ public class Goat {
         System.out.println("Hello! I'm Goat.");
         System.out.println("What can I do for you?");
         System.out.println(separator);
+        if (loadWarning != null) {
+            printStorageWarning(loadWarning, separator);
+        }
 
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
@@ -138,22 +166,43 @@ public class Goat {
                     break;
                 case MARK:
                     int markIndex = parseTaskIndex(argument, tasks.size(), commandWord);
+                    boolean wasDoneBeforeMark = tasks.get(markIndex).isDone;
                     tasks.get(markIndex).markAsDone();
-                    storage.save(tasks);
+                    try {
+                        storage.save(tasks);
+                    } catch (IOException exception) {
+                        if (!wasDoneBeforeMark) {
+                            tasks.get(markIndex).markAsNotDone();
+                        }
+                        throw exception;
+                    }
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println("  " + tasks.get(markIndex));
                     break;
                 case UNMARK:
                     int unmarkIndex = parseTaskIndex(argument, tasks.size(), commandWord);
+                    boolean wasDoneBeforeUnmark = tasks.get(unmarkIndex).isDone;
                     tasks.get(unmarkIndex).markAsNotDone();
-                    storage.save(tasks);
+                    try {
+                        storage.save(tasks);
+                    } catch (IOException exception) {
+                        if (wasDoneBeforeUnmark) {
+                            tasks.get(unmarkIndex).markAsDone();
+                        }
+                        throw exception;
+                    }
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println("  " + tasks.get(unmarkIndex));
                     break;
                 case DELETE:
                     int deleteIndex = parseTaskIndex(argument, tasks.size(), commandWord);
                     Task deletedTask = tasks.remove(deleteIndex);
-                    storage.save(tasks);
+                    try {
+                        storage.save(tasks);
+                    } catch (IOException exception) {
+                        tasks.add(deleteIndex, deletedTask);
+                        throw exception;
+                    }
                     System.out.println("Noted. I've removed this task:");
                     System.out.println("  " + deletedTask);
                     System.out.println("Now you have " + tasks.size() + " tasks in the list.");
@@ -206,6 +255,9 @@ public class Goat {
                 }
             } catch (GoatException exception) {
                 System.out.println("OOPS!!! " + exception.getMessage());
+            } catch (IOException exception) {
+                System.out.println("OOPS!!! I couldn't save your tasks: " + exception.getMessage()
+                        + " Your task list was not changed.");
             }
             System.out.println(separator);
         }

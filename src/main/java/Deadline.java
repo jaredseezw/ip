@@ -22,7 +22,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileString() {
-        return "D | " + getFileStatus() + " | " + description + " | " + by;
+        return formatFileData("D", by);
     }
 
     /**

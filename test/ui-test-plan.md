@@ -2,7 +2,7 @@
 
 This plan is the source of truth for fail-fast console UI testing. Each test case runs in a fresh application process, and its expected output is compared exactly with stdout.
 
-The file-writing side effect is checked separately by `test/test_storage.py`, because this plan compares console output only.
+Each case uses an isolated working directory so saved tasks cannot leak into later cases. File writing, loading, and storage failures are checked separately by `test/test_storage.py`, because this plan compares one session's console output only.
 
 ## Configuration
 

@@ -48,6 +48,36 @@ public abstract class Task {
     }
 
     /**
+     * Formats this task's common data together with any type-specific fields.
+     * Backslashes and pipe characters are escaped so saved text can be read unambiguously.
+     *
+     * @param taskType one-letter task type
+     * @param additionalFields fields specific to the task subtype
+     * @return serialized task data
+     */
+    protected String formatFileData(String taskType, String... additionalFields) {
+        StringBuilder result = new StringBuilder(taskType)
+                .append(" | ")
+                .append(getFileStatus())
+                .append(" | ")
+                .append(escapeFileField(description));
+        for (String field : additionalFields) {
+            result.append(" | ").append(escapeFileField(field));
+        }
+        return result.toString();
+    }
+
+    /**
+     * Escapes characters that have special meaning in the data-file format.
+     *
+     * @param field text to escape
+     * @return escaped text
+     */
+    private String escapeFileField(String field) {
+        return field.replace("\\", "\\\\").replace("|", "\\|");
+    }
+
+    /**
      * Returns a representation of this task suitable for saving to disk.
      *
      * @return serialized task data

@@ -25,7 +25,7 @@ public class Event extends Task {
      */
     @Override
     public String toFileString() {
-        return "E | " + getFileStatus() + " | " + description + " | " + from + " | " + to;
+        return formatFileData("E", from, to);
     }
 
     /**

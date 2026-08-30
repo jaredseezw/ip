@@ -7,6 +7,7 @@ import argparse
 import re
 import subprocess
 import sys
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -109,14 +110,16 @@ def show_transcript(case: TestCase, actual: str) -> None:
 def run_case(classes_directory: Path, main_class: str, case: TestCase) -> bool:
     """Run one fresh process and compare its complete stdout exactly."""
     try:
-        result = subprocess.run(
-            ["java", "-cp", str(classes_directory), main_class],
-            input=case.commands,
-            capture_output=True,
-            text=True,
-            check=False,
-            timeout=30,
-        )
+        with tempfile.TemporaryDirectory() as working_directory:
+            result = subprocess.run(
+                ["java", "-cp", str(classes_directory), main_class],
+                cwd=working_directory,
+                input=case.commands,
+                capture_output=True,
+                text=True,
+                check=False,
+                timeout=30,
+            )
     except subprocess.TimeoutExpired as error:
         actual = normalized_output(error.stdout or "")
         expected = normalized_output(case.expected)
