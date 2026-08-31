@@ -1,0 +1,103 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Converts raw user input into commands and task values.
+ */
+public final class Parser {
+    private static final Pattern DEADLINE_ARGUMENTS =
+            Pattern.compile("^(.*?)\\s*/by(?:\\s+(.*))?$");
+    private static final Pattern EVENT_ARGUMENTS =
+            Pattern.compile("^(.*?)\\s*/from(?:\\s+(.*?))?\\s*/to(?:\\s+(.*))?$");
+
+    private Parser() {
+    }
+
+    /**
+     * Separates a command word from its argument.
+     */
+    public static ParsedCommand parse(String input) throws GoatException {
+        String command = input.trim();
+        if (command.isEmpty()) {
+            throw new GoatException("Please enter a command.");
+        }
+
+        String[] parts = command.split("\\s+", 2);
+        String commandWord = parts[0];
+        String argument = parts.length == 2 ? parts[1].trim() : "";
+        return new ParsedCommand(CommandType.from(commandWord), commandWord, argument);
+    }
+
+    /**
+     * Creates a todo from its command argument.
+     */
+    public static Todo parseTodo(String argument) throws GoatException {
+        if (argument.isEmpty()) {
+            throw new GoatException("A todo needs a description. Try: todo <description>");
+        }
+        return new Todo(argument);
+    }
+
+    /**
+     * Creates a deadline from its command argument.
+     */
+    public static Deadline parseDeadline(String argument) throws GoatException {
+        Matcher matcher = DEADLINE_ARGUMENTS.matcher(argument);
+        if (!matcher.matches()) {
+            throw new GoatException("Use this format: deadline <description> /by <yyyy-MM-dd>");
+        }
+
+        String description = matcher.group(1).trim();
+        String by = matcher.group(2) == null ? "" : matcher.group(2).trim();
+        if (description.isEmpty()) {
+            throw new GoatException("A deadline needs a description before /by.");
+        }
+        if (by.isEmpty()) {
+            throw new GoatException("A deadline needs a date after /by.");
+        }
+        return new Deadline(description, TaskDate.parse(by, "The deadline date"));
+    }
+
+    /**
+     * Creates an event from its command argument.
+     */
+    public static Event parseEvent(String argument) throws GoatException {
+        Matcher matcher = EVENT_ARGUMENTS.matcher(argument);
+        if (!matcher.matches()) {
+            throw new GoatException(
+                    "Use this format: event <description> /from <start date> /to <end date>");
+        }
+
+        String description = matcher.group(1).trim();
+        String from = matcher.group(2) == null ? "" : matcher.group(2).trim();
+        String to = matcher.group(3) == null ? "" : matcher.group(3).trim();
+        if (description.isEmpty()) {
+            throw new GoatException("An event needs a description before /from.");
+        }
+        if (from.isEmpty()) {
+            throw new GoatException("An event needs a start date after /from.");
+        }
+        if (to.isEmpty()) {
+            throw new GoatException("An event needs an end date after /to.");
+        }
+        return new Event(description, TaskDate.parse(from, "The event start date"),
+                TaskDate.parse(to, "The event end date"));
+    }
+
+    /**
+     * Rejects trailing arguments for commands that do not accept them.
+     */
+    public static void requireNoArgument(ParsedCommand command) throws GoatException {
+        if (!command.argument().isEmpty()) {
+            throw unknownCommandException();
+        }
+    }
+
+    /**
+     * Creates the guidance shown for an unsupported command.
+     */
+    public static GoatException unknownCommandException() {
+        return new GoatException("I don't recognise that command. Try todo, deadline, event, "
+                + "list, mark, unmark, delete, or bye.");
+    }
+}
