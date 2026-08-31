@@ -1,3 +1,5 @@
+package goat;
+
 /**
  * Identifies the supported command words entered by the user.
  */

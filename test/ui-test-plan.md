@@ -8,7 +8,7 @@ Each case uses an isolated working directory so saved tasks cannot leak into lat
 
 - Source directory: `src/main/java`
 - Classes directory: `out/production/ip`
-- Main class: `Goat`
+- Main class: `goat.Goat`
 
 ## Test case: Exit immediately
 

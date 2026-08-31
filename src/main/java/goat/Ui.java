@@ -1,3 +1,5 @@
+package goat;
+
 import java.util.Scanner;
 
 /**

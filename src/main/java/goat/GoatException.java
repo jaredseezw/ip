@@ -1,3 +1,5 @@
+package goat;
+
 /**
  * Represents an invalid command or command argument supplied by the user.
  */

@@ -8,7 +8,7 @@ import unittest
 
 
 REPOSITORY = Path(__file__).parent.parent.resolve()
-SOURCES = sorted((REPOSITORY / "src/main/java").glob("*.java"))
+SOURCES = sorted((REPOSITORY / "src/main/java").rglob("*.java"))
 
 
 class StorageIntegrationTest(unittest.TestCase):
@@ -30,7 +30,7 @@ class StorageIntegrationTest(unittest.TestCase):
     def run_goat(self, working_directory: Path, commands: str) -> subprocess.CompletedProcess[str]:
         """Runs one Goat session in the supplied isolated working directory."""
         return subprocess.run(
-            ["java", "-cp", str(self.classes_directory), "Goat"],
+            ["java", "-cp", str(self.classes_directory), "goat.Goat"],
             cwd=working_directory,
             input=commands,
             text=True,

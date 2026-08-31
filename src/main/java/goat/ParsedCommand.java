@@ -1,3 +1,5 @@
+package goat;
+
 /**
  * Contains a recognized command type and its remaining argument text.
  *
