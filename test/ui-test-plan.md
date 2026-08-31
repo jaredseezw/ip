@@ -43,15 +43,15 @@ ____________________________________________________________
 
 ### Aim
 
-Verify all three task types, string-based date and time values, polymorphic listing, and inherited completion status.
+Verify all three task types, parsed date values, readable date formatting, polymorphic listing, and inherited completion status.
 
 ### Commands
 
 ```text
 todo borrow book
-deadline return book /by Sunday
-event project meeting /from Mon 2pm /to 4pm
-deadline do homework /by no idea :-p
+deadline return book /by 2026-08-30
+event project meeting /from 2026-09-01 /to 2026-09-02
+deadline do homework /by 2026-10-15
 mark 2
 list
 unmark 2
@@ -78,40 +78,40 @@ Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] return book (by: Sunday)
+  [D][ ] return book (by: Aug 30 2026)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [E][ ] project meeting (from: Mon 2pm to: 4pm)
+  [E][ ] project meeting (from: Sep 01 2026 to: Sep 02 2026)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] do homework (by: no idea :-p)
+  [D][ ] do homework (by: Oct 15 2026)
 Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-  [D][X] return book (by: Sunday)
+  [D][X] return book (by: Aug 30 2026)
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][ ] borrow book
-2.[D][X] return book (by: Sunday)
-3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
-4.[D][ ] do homework (by: no idea :-p)
+2.[D][X] return book (by: Aug 30 2026)
+3.[E][ ] project meeting (from: Sep 01 2026 to: Sep 02 2026)
+4.[D][ ] do homework (by: Oct 15 2026)
 ____________________________________________________________
 ____________________________________________________________
 OK, I've marked this task as not done yet:
-  [D][ ] return book (by: Sunday)
+  [D][ ] return book (by: Aug 30 2026)
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][ ] borrow book
-2.[D][ ] return book (by: Sunday)
-3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
-4.[D][ ] do homework (by: no idea :-p)
+2.[D][ ] return book (by: Aug 30 2026)
+3.[E][ ] project meeting (from: Sep 01 2026 to: Sep 02 2026)
+4.[D][ ] do homework (by: Oct 15 2026)
 ____________________________________________________________
 ____________________________________________________________
 Bye. Hope to see you again soon!
@@ -128,8 +128,8 @@ Verify deletion of middle, first, last, and sole tasks, including renumbering, r
 
 ```text
 todo first task
-deadline second task /by Friday
-event third task /from Monday /to Tuesday
+deadline second task /by 2026-09-04
+event third task /from 2026-09-07 /to 2026-09-08
 todo fourth task
 mark 2
 delete 3
@@ -161,12 +161,12 @@ Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] second task (by: Friday)
+  [D][ ] second task (by: Sep 04 2026)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [E][ ] third task (from: Monday to: Tuesday)
+  [E][ ] third task (from: Sep 07 2026 to: Sep 08 2026)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
@@ -176,17 +176,17 @@ Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-  [D][X] second task (by: Friday)
+  [D][X] second task (by: Sep 04 2026)
 ____________________________________________________________
 ____________________________________________________________
 Noted. I've removed this task:
-  [E][ ] third task (from: Monday to: Tuesday)
+  [E][ ] third task (from: Sep 07 2026 to: Sep 08 2026)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][ ] first task
-2.[D][X] second task (by: Friday)
+2.[D][X] second task (by: Sep 04 2026)
 3.[T][ ] fourth task
 ____________________________________________________________
 ____________________________________________________________
@@ -196,7 +196,7 @@ Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
-1.[D][X] second task (by: Friday)
+1.[D][X] second task (by: Sep 04 2026)
 2.[T][ ] fourth task
 ____________________________________________________________
 ____________________________________________________________
@@ -206,7 +206,7 @@ Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Noted. I've removed this task:
-  [D][X] second task (by: Friday)
+  [D][X] second task (by: Sep 04 2026)
 Now you have 0 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
@@ -221,7 +221,7 @@ ____________________________________________________________
 
 ### Aim
 
-Verify that empty and unknown commands, incomplete task details, and invalid task numbers produce specific guidance without terminating the application or corrupting its task list.
+Verify that empty and unknown commands, incomplete or invalid task details, and invalid task numbers produce specific guidance without terminating the application or corrupting its task list.
 
 ### Commands
 
@@ -232,14 +232,17 @@ delete 1
 todo
 todo read book
 deadline submit assignment
-deadline /by Friday
+deadline /by 2026-09-05
 deadline submit assignment /by
 deadline submit assignment /by Friday
+deadline submit assignment /by 2026-09-05
 event meeting
-event /from Monday /to Tuesday
-event meeting /from /to Tuesday
-event meeting /from Monday /to
-event meeting /from Monday /to Tuesday
+event /from 2026-09-06 /to 2026-09-07
+event meeting /from /to 2026-09-07
+event meeting /from 2026-09-06 /to
+event meeting /from Monday /to 2026-09-07
+event meeting /from 2026-09-06 /to not-a-date
+event meeting /from 2026-09-06 /to 2026-09-07
 mark
 mark two
 mark 0
@@ -285,34 +288,43 @@ Got it. I've added this task:
 Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! Use this format: deadline <description> /by <date or time>
+OOPS!!! Use this format: deadline <description> /by <yyyy-MM-dd>
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! A deadline needs a description before /by.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! A deadline needs a date or time after /by.
+OOPS!!! A deadline needs a date after /by.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! The deadline date must be a valid date in yyyy-MM-dd format.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] submit assignment (by: Friday)
+  [D][ ] submit assignment (by: Sep 05 2026)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! Use this format: event <description> /from <start> /to <end>
+OOPS!!! Use this format: event <description> /from <start date> /to <end date>
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! An event needs a description before /from.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! An event needs a start time after /from.
+OOPS!!! An event needs a start date after /from.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! An event needs an end time after /to.
+OOPS!!! An event needs an end date after /to.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! The event start date must be a valid date in yyyy-MM-dd format.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! The event end date must be a valid date in yyyy-MM-dd format.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [E][ ] meeting (from: Monday to: Tuesday)
+  [E][ ] meeting (from: Sep 06 2026 to: Sep 07 2026)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
@@ -353,8 +365,8 @@ ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][ ] read book
-2.[D][ ] submit assignment (by: Friday)
-3.[E][ ] meeting (from: Monday to: Tuesday)
+2.[D][ ] submit assignment (by: Sep 05 2026)
+3.[E][ ] meeting (from: Sep 06 2026 to: Sep 07 2026)
 ____________________________________________________________
 ____________________________________________________________
 Bye. Hope to see you again soon!

@@ -45,8 +45,8 @@ class StorageIntegrationTest(unittest.TestCase):
                 working_directory,
                 (
                     "todo read book\n"
-                    "deadline return book /by June 6th\n"
-                    "event project meeting /from Aug 6th 2pm /to 4pm\n"
+                    "deadline return book /by 2026-06-06\n"
+                    "event project meeting /from 2026-08-06 /to 2026-08-07\n"
                     "mark 1\n"
                     "delete 2\n"
                     "bye\n"
@@ -57,13 +57,13 @@ class StorageIntegrationTest(unittest.TestCase):
             self.assertEqual(
                 saved_data,
                 "T | 1 | read book\n"
-                "E | 0 | project meeting | Aug 6th 2pm | 4pm\n",
+                "E | 0 | project meeting | 2026-08-06 | 2026-08-07\n",
             )
 
             loaded_session = self.run_goat(working_directory, "list\nbye\n")
             self.assertIn("1.[T][X] read book", loaded_session.stdout)
             self.assertIn(
-                "2.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)",
+                "2.[E][ ] project meeting (from: Aug 06 2026 to: Aug 07 2026)",
                 loaded_session.stdout,
             )
 
@@ -82,6 +82,7 @@ class StorageIntegrationTest(unittest.TestCase):
             "D | maybe | broken",
             "X | 0 | unknown type",
             "D | 0 | missing date",
+            "D | 0 | invalid date | Friday",
             "T | 0 |",
             "T",
         )

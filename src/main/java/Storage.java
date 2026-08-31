@@ -82,13 +82,16 @@ public class Storage {
         case "D":
             requireFieldCount(fields, 4, "deadline");
             task = new Deadline(requireText(fields.get(2), "deadline description"),
-                    requireText(fields.get(3), "deadline date or time"));
+                    TaskDate.parse(requireText(fields.get(3), "deadline date"),
+                            "The saved deadline date"));
             break;
         case "E":
             requireFieldCount(fields, 5, "event");
             task = new Event(requireText(fields.get(2), "event description"),
-                    requireText(fields.get(3), "event start"),
-                    requireText(fields.get(4), "event end"));
+                    TaskDate.parse(requireText(fields.get(3), "event start date"),
+                            "The saved event start date"),
+                    TaskDate.parse(requireText(fields.get(4), "event end date"),
+                            "The saved event end date"));
             break;
         default:
             throw new GoatException("unknown task type '" + fields.get(0) + "'.");
