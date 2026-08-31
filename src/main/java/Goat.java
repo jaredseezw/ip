@@ -216,7 +216,8 @@ public class Goat {
                 case DEADLINE:
                     Matcher deadlineMatcher = DEADLINE_ARGUMENTS.matcher(argument);
                     if (!deadlineMatcher.matches()) {
-                        throw new GoatException("Use this format: deadline <description> /by <date or time>");
+                        throw new GoatException(
+                                "Use this format: deadline <description> /by <yyyy-MM-dd>");
                     }
                     String description = deadlineMatcher.group(1).trim();
                     String by = deadlineMatcher.group(2) == null ? "" : deadlineMatcher.group(2).trim();
@@ -224,15 +225,16 @@ public class Goat {
                         throw new GoatException("A deadline needs a description before /by.");
                     }
                     if (by.isEmpty()) {
-                        throw new GoatException("A deadline needs a date or time after /by.");
+                        throw new GoatException("A deadline needs a date after /by.");
                     }
-                    addTask(tasks, new Deadline(description, by), storage);
+                    addTask(tasks, new Deadline(description,
+                            TaskDate.parse(by, "The deadline date")), storage);
                     break;
                 case EVENT:
                     Matcher eventMatcher = EVENT_ARGUMENTS.matcher(argument);
                     if (!eventMatcher.matches()) {
                         throw new GoatException(
-                                "Use this format: event <description> /from <start> /to <end>");
+                                "Use this format: event <description> /from <start date> /to <end date>");
                     }
                     String eventDescription = eventMatcher.group(1).trim();
                     String from = eventMatcher.group(2) == null ? "" : eventMatcher.group(2).trim();
@@ -241,12 +243,14 @@ public class Goat {
                         throw new GoatException("An event needs a description before /from.");
                     }
                     if (from.isEmpty()) {
-                        throw new GoatException("An event needs a start time after /from.");
+                        throw new GoatException("An event needs a start date after /from.");
                     }
                     if (to.isEmpty()) {
-                        throw new GoatException("An event needs an end time after /to.");
+                        throw new GoatException("An event needs an end date after /to.");
                     }
-                    addTask(tasks, new Event(eventDescription, from, to), storage);
+                    addTask(tasks, new Event(eventDescription,
+                            TaskDate.parse(from, "The event start date"),
+                            TaskDate.parse(to, "The event end date")), storage);
                     break;
                 case UNKNOWN:
                     throw unknownCommandException();
