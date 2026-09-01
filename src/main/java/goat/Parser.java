@@ -17,6 +17,10 @@ public final class Parser {
 
     /**
      * Separates a command word from its argument.
+     *
+     * @param input raw input entered by the user
+     * @return command type, command word, and remaining argument
+     * @throws GoatException if the input is empty
      */
     public static ParsedCommand parse(String input) throws GoatException {
         String command = input.trim();
@@ -32,6 +36,10 @@ public final class Parser {
 
     /**
      * Creates a todo from its command argument.
+     *
+     * @param argument todo description
+     * @return parsed todo
+     * @throws GoatException if the description is empty
      */
     public static Todo parseTodo(String argument) throws GoatException {
         if (argument.isEmpty()) {
@@ -42,6 +50,10 @@ public final class Parser {
 
     /**
      * Creates a deadline from its command argument.
+     *
+     * @param argument deadline description and due date
+     * @return parsed deadline
+     * @throws GoatException if required fields are missing or the date is invalid
      */
     public static Deadline parseDeadline(String argument) throws GoatException {
         Matcher matcher = DEADLINE_ARGUMENTS.matcher(argument);
@@ -62,6 +74,10 @@ public final class Parser {
 
     /**
      * Creates an event from its command argument.
+     *
+     * @param argument event description and date range
+     * @return parsed event
+     * @throws GoatException if required fields are missing or either date is invalid
      */
     public static Event parseEvent(String argument) throws GoatException {
         Matcher matcher = EVENT_ARGUMENTS.matcher(argument);
@@ -88,6 +104,9 @@ public final class Parser {
 
     /**
      * Rejects trailing arguments for commands that do not accept them.
+     *
+     * @param command parsed command to validate
+     * @throws GoatException if the command has an argument
      */
     public static void requireNoArgument(ParsedCommand command) throws GoatException {
         if (!command.argument().isEmpty()) {
@@ -97,6 +116,8 @@ public final class Parser {
 
     /**
      * Creates the guidance shown for an unsupported command.
+     *
+     * @return exception listing the supported commands
      */
     public static GoatException unknownCommandException() {
         return new GoatException("I don't recognise that command. Try todo, deadline, event, "

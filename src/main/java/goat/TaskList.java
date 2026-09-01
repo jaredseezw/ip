@@ -18,6 +18,8 @@ public class TaskList {
 
     /**
      * Creates a task list containing the supplied tasks.
+     *
+     * @param tasks initial tasks copied into the new list
      */
     public TaskList(List<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
@@ -25,6 +27,8 @@ public class TaskList {
 
     /**
      * Returns the current number of tasks.
+     *
+     * @return number of tasks
      */
     public int size() {
         return tasks.size();
@@ -32,6 +36,9 @@ public class TaskList {
 
     /**
      * Returns the task at a zero-based index.
+     *
+     * @param index zero-based task index
+     * @return task at the index
      */
     public Task get(int index) {
         return tasks.get(index);
@@ -39,6 +46,8 @@ public class TaskList {
 
     /**
      * Adds a task to the end of the list.
+     *
+     * @param task task to add
      */
     public void add(Task task) {
         tasks.add(task);
@@ -46,6 +55,9 @@ public class TaskList {
 
     /**
      * Inserts a task at a zero-based index.
+     *
+     * @param index zero-based insertion index
+     * @param task task to insert
      */
     public void add(int index, Task task) {
         tasks.add(index, task);
@@ -53,6 +65,9 @@ public class TaskList {
 
     /**
      * Removes and returns a task at a zero-based index.
+     *
+     * @param index zero-based task index
+     * @return removed task
      */
     public Task delete(int index) {
         return tasks.remove(index);
@@ -60,6 +75,8 @@ public class TaskList {
 
     /**
      * Returns an immutable snapshot for display or storage.
+     *
+     * @return immutable task snapshot
      */
     public List<Task> asList() {
         return List.copyOf(tasks);
@@ -67,6 +84,11 @@ public class TaskList {
 
     /**
      * Parses and validates a one-based task number entered by the user.
+     *
+     * @param argument task-number text
+     * @param commandWord command used in error guidance
+     * @return corresponding zero-based index
+     * @throws GoatException if the task number is missing, invalid, or out of range
      */
     public int parseIndex(String argument, String commandWord) throws GoatException {
         if (argument.isEmpty()) {
