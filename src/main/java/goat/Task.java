@@ -4,7 +4,9 @@ package goat;
  * Represents a task and whether it has been completed.
  */
 public abstract class Task {
+    /** Human-readable task description. */
     protected String description;
+    /** Whether the task is completed. */
     protected boolean isDone;
 
     /**

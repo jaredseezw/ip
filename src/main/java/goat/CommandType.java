@@ -4,14 +4,23 @@ package goat;
  * Identifies the supported command words entered by the user.
  */
 public enum CommandType {
+    /** Exit command. */
     BYE("bye"),
+    /** Delete-task command. */
     DELETE("delete"),
+    /** Add-deadline command. */
     DEADLINE("deadline"),
+    /** Add-event command. */
     EVENT("event"),
+    /** List-tasks command. */
     LIST("list"),
+    /** Mark-task command. */
     MARK("mark"),
+    /** Add-todo command. */
     TODO("todo"),
+    /** Unmark-task command. */
     UNMARK("unmark"),
+    /** Unrecognized command. */
     UNKNOWN("");
 
     private final String commandWord;
