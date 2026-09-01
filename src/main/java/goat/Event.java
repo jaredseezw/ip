@@ -7,9 +7,9 @@ import java.time.LocalDate;
  */
 public class Event extends Task {
     /** First date of this event. */
-    protected LocalDate from;
+    protected LocalDate startDate;
     /** Last date of this event. */
-    protected LocalDate to;
+    protected LocalDate endDate;
 
     /**
      * Creates an incomplete event with the given description and date range.
@@ -20,8 +20,8 @@ public class Event extends Task {
      */
     public Event(String description, LocalDate from, LocalDate to) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.startDate = from;
+        this.endDate = to;
     }
 
     /**
@@ -31,7 +31,7 @@ public class Event extends Task {
      */
     @Override
     public String toFileString() {
-        return formatFileData("E", from.toString(), to.toString());
+        return formatFileData("E", startDate.toString(), endDate.toString());
     }
 
     /**
@@ -41,7 +41,7 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + TaskDate.format(from)
-                + " to: " + TaskDate.format(to) + ")";
+        return "[E]" + super.toString() + " (from: " + TaskDate.format(startDate)
+                + " to: " + TaskDate.format(endDate) + ")";
     }
 }

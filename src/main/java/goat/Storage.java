@@ -77,26 +77,26 @@ public class Storage {
 
         Task task;
         switch (fields.get(0)) {
-        case "T":
-            requireFieldCount(fields, 3, "todo");
-            task = new Todo(requireText(fields.get(2), "todo description"));
-            break;
-        case "D":
-            requireFieldCount(fields, 4, "deadline");
-            task = new Deadline(requireText(fields.get(2), "deadline description"),
-                    TaskDate.parse(requireText(fields.get(3), "deadline date"),
-                            "The saved deadline date"));
-            break;
-        case "E":
-            requireFieldCount(fields, 5, "event");
-            task = new Event(requireText(fields.get(2), "event description"),
-                    TaskDate.parse(requireText(fields.get(3), "event start date"),
-                            "The saved event start date"),
-                    TaskDate.parse(requireText(fields.get(4), "event end date"),
-                            "The saved event end date"));
-            break;
-        default:
-            throw new GoatException("unknown task type '" + fields.get(0) + "'.");
+            case "T":
+                requireFieldCount(fields, 3, "todo");
+                task = new Todo(requireText(fields.get(2), "todo description"));
+                break;
+            case "D":
+                requireFieldCount(fields, 4, "deadline");
+                task = new Deadline(requireText(fields.get(2), "deadline description"),
+                        TaskDate.parse(requireText(fields.get(3), "deadline date"),
+                                "The saved deadline date"));
+                break;
+            case "E":
+                requireFieldCount(fields, 5, "event");
+                task = new Event(requireText(fields.get(2), "event description"),
+                        TaskDate.parse(requireText(fields.get(3), "event start date"),
+                                "The saved event start date"),
+                        TaskDate.parse(requireText(fields.get(4), "event end date"),
+                                "The saved event end date"));
+                break;
+            default:
+                throw new GoatException("unknown task type '" + fields.get(0) + "'.");
         }
 
         if (isDone) {

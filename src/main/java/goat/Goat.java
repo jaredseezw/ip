@@ -62,35 +62,35 @@ public class Goat {
      */
     private boolean execute(ParsedCommand command) throws GoatException, IOException {
         switch (command.type()) {
-        case BYE:
-            Parser.requireNoArgument(command);
-            return true;
-        case LIST:
-            Parser.requireNoArgument(command);
-            ui.showTaskList(tasks);
-            break;
-        case MARK:
-            updateCompletion(command.argument(), command.commandWord(), true);
-            break;
-        case UNMARK:
-            updateCompletion(command.argument(), command.commandWord(), false);
-            break;
-        case DELETE:
-            deleteTask(command.argument(), command.commandWord());
-            break;
-        case TODO:
-            addTask(Parser.parseTodo(command.argument()));
-            break;
-        case DEADLINE:
-            addTask(Parser.parseDeadline(command.argument()));
-            break;
-        case EVENT:
-            addTask(Parser.parseEvent(command.argument()));
-            break;
-        case UNKNOWN:
-            throw Parser.unknownCommandException();
-        default:
-            throw Parser.unknownCommandException();
+            case BYE:
+                Parser.requireNoArgument(command);
+                return true;
+            case LIST:
+                Parser.requireNoArgument(command);
+                ui.showTaskList(tasks);
+                break;
+            case MARK:
+                updateCompletion(command.argument(), command.commandWord(), true);
+                break;
+            case UNMARK:
+                updateCompletion(command.argument(), command.commandWord(), false);
+                break;
+            case DELETE:
+                deleteTask(command.argument(), command.commandWord());
+                break;
+            case TODO:
+                addTask(Parser.parseTodo(command.argument()));
+                break;
+            case DEADLINE:
+                addTask(Parser.parseDeadline(command.argument()));
+                break;
+            case EVENT:
+                addTask(Parser.parseEvent(command.argument()));
+                break;
+            case UNKNOWN:
+                throw Parser.unknownCommandException();
+            default:
+                throw Parser.unknownCommandException();
         }
         return false;
     }
