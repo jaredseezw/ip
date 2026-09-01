@@ -6,7 +6,7 @@ import java.time.LocalDate;
  * Represents a task that must be completed by a specified date.
  */
 public class Deadline extends Task {
-    protected LocalDate by;
+    protected LocalDate dueDate;
 
     /**
      * Creates an incomplete deadline with the given description and due date.
@@ -16,7 +16,7 @@ public class Deadline extends Task {
      */
     public Deadline(String description, LocalDate by) {
         super(description);
-        this.by = by;
+        this.dueDate = by;
     }
 
     /**
@@ -26,7 +26,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileString() {
-        return formatFileData("D", by.toString());
+        return formatFileData("D", dueDate.toString());
     }
 
     /**
@@ -36,6 +36,6 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + TaskDate.format(by) + ")";
+        return "[D]" + super.toString() + " (by: " + TaskDate.format(dueDate) + ")";
     }
 }
