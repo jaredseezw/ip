@@ -87,6 +87,16 @@ public final class Parser {
     }
 
     /**
+     * Validates and returns a keyword used to search task descriptions.
+     */
+    public static String parseKeyword(String argument) throws GoatException {
+        if (argument.isEmpty()) {
+            throw new GoatException("Please specify a keyword. Try: find <keyword>");
+        }
+        return argument;
+    }
+
+    /**
      * Rejects trailing arguments for commands that do not accept them.
      */
     public static void requireNoArgument(ParsedCommand command) throws GoatException {
@@ -100,6 +110,6 @@ public final class Parser {
      */
     public static GoatException unknownCommandException() {
         return new GoatException("I don't recognise that command. Try todo, deadline, event, "
-                + "list, mark, unmark, delete, or bye.");
+                + "list, find, mark, unmark, delete, or bye.");
     }
 }

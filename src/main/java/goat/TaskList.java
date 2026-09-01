@@ -66,6 +66,19 @@ public class TaskList {
     }
 
     /**
+     * Returns tasks whose descriptions contain the supplied keyword.
+     */
+    public TaskList find(String keyword) {
+        List<Task> matches = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.description.contains(keyword)) {
+                matches.add(task);
+            }
+        }
+        return new TaskList(matches);
+    }
+
+    /**
      * Parses and validates a one-based task number entered by the user.
      */
     public int parseIndex(String argument, String commandWord) throws GoatException {
