@@ -59,4 +59,25 @@ public class TaskListTest {
 
         assertEquals("There are no tasks in the list yet.", exception.getMessage());
     }
+
+    @Test
+    public void find_matchingKeyword_returnsMatchingTasksInOriginalOrder() {
+        TaskList searchableTasks = new TaskList(List.of(
+                new Todo("read book"),
+                new Todo("finish homework"),
+                new Todo("return book")));
+
+        TaskList matches = searchableTasks.find("book");
+
+        assertEquals(2, matches.size());
+        assertEquals("[T][ ] read book", matches.get(0).toString());
+        assertEquals("[T][ ] return book", matches.get(1).toString());
+    }
+
+    @Test
+    public void find_differentCase_returnsNoMatches() {
+        TaskList matches = tasks.find("FIRST");
+
+        assertEquals(0, matches.size());
+    }
 }

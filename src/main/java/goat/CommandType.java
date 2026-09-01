@@ -12,6 +12,8 @@ public enum CommandType {
     DEADLINE("deadline"),
     /** Add-event command. */
     EVENT("event"),
+    /** Find-tasks command. */
+    FIND("find"),
     /** List-tasks command. */
     LIST("list"),
     /** Mark-task command. */

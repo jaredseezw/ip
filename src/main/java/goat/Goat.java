@@ -87,6 +87,9 @@ public class Goat {
             case EVENT:
                 addTask(Parser.parseEvent(command.argument()));
                 break;
+            case FIND:
+                ui.showMatchingTasks(tasks.find(Parser.parseKeyword(command.argument())));
+                break;
             case UNKNOWN:
                 throw Parser.unknownCommandException();
             default:

@@ -217,6 +217,80 @@ Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
 
+## Test case: Find tasks by keyword
+
+### Aim
+
+Verify that `find` returns tasks whose descriptions contain a keyword, preserves match order and completion state, and handles no matches.
+
+### Commands
+
+```text
+todo read book
+deadline return book /by 2026-09-05
+event book club /from 2026-09-06 /to 2026-09-07
+todo finish homework
+mark 1
+find book
+find homework
+find missing
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+  ____             _
+ / ___| ___   __ _| |_
+| |  _ / _ \ / _` | __|
+| |_| | (_) | (_| | |_
+ \____|\___/ \__,_|\__|
+Hello! I'm Goat.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] return book (by: Sep 05 2026)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] book club (from: Sep 06 2026 to: Sep 07 2026)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] finish homework
+Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [T][X] read book
+____________________________________________________________
+____________________________________________________________
+Here are the matching tasks in your list:
+1.[T][X] read book
+2.[D][ ] return book (by: Sep 05 2026)
+3.[E][ ] book club (from: Sep 06 2026 to: Sep 07 2026)
+____________________________________________________________
+____________________________________________________________
+Here are the matching tasks in your list:
+1.[T][ ] finish homework
+____________________________________________________________
+____________________________________________________________
+Here are the matching tasks in your list:
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
 ## Test case: Recover from incorrect inputs
 
 ### Aim
@@ -253,6 +327,7 @@ delete 0
 delete 4
 mark 1
 unmark 1
+find
 blah
 list
 bye
@@ -360,7 +435,10 @@ OK, I've marked this task as not done yet:
   [T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, delete, or bye.
+OOPS!!! Please specify a keyword. Try: find <keyword>
+____________________________________________________________
+____________________________________________________________
+OOPS!!! I don't recognise that command. Try todo, deadline, event, list, find, mark, unmark, delete, or bye.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
