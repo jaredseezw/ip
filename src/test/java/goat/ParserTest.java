@@ -35,8 +35,8 @@ public class ParserTest {
 
     @Test
     public void parseDeadline_impossibleDate_throwsHelpfulException() {
-        GoatException exception = assertThrows(GoatException.class,
-                () -> Parser.parseDeadline("submit report /by 2026-02-30"));
+        GoatException exception = assertThrows(
+                GoatException.class, () -> Parser.parseDeadline("submit report /by 2026-02-30"));
 
         assertEquals("The deadline date must be a valid date in yyyy-MM-dd format.",
                 exception.getMessage());
@@ -44,8 +44,8 @@ public class ParserTest {
 
     @Test
     public void parseEvent_missingEndDate_throwsHelpfulException() {
-        GoatException exception = assertThrows(GoatException.class,
-                () -> Parser.parseEvent("meeting /from 2026-09-01 /to"));
+        GoatException exception = assertThrows(
+                GoatException.class, () -> Parser.parseEvent("meeting /from 2026-09-01 /to"));
 
         assertEquals("An event needs an end date after /to.", exception.getMessage());
     }

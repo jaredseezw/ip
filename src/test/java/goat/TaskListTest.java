@@ -22,8 +22,8 @@ public class TaskListTest {
 
     @Test
     public void parseIndex_missingNumber_throwsUsageGuidance() {
-        GoatException exception = assertThrows(GoatException.class,
-                () -> tasks.parseIndex("", "mark"));
+        GoatException exception = assertThrows(
+                GoatException.class, () -> tasks.parseIndex("", "mark"));
 
         assertEquals("Please specify a task number. Try: mark <task number>",
                 exception.getMessage());
@@ -31,18 +31,18 @@ public class TaskListTest {
 
     @Test
     public void parseIndex_nonNumericNumber_throwsHelpfulException() {
-        GoatException exception = assertThrows(GoatException.class,
-                () -> tasks.parseIndex("two", "delete"));
+        GoatException exception = assertThrows(
+                GoatException.class, () -> tasks.parseIndex("two", "delete"));
 
         assertEquals("The task number must be a positive whole number.", exception.getMessage());
     }
 
     @Test
     public void parseIndex_numbersOutsideList_throwsRangeGuidance() {
-        GoatException belowRange = assertThrows(GoatException.class,
-                () -> tasks.parseIndex("0", "mark"));
-        GoatException aboveRange = assertThrows(GoatException.class,
-                () -> tasks.parseIndex("4", "mark"));
+        GoatException belowRange = assertThrows(
+                GoatException.class, () -> tasks.parseIndex("0", "mark"));
+        GoatException aboveRange = assertThrows(
+                GoatException.class, () -> tasks.parseIndex("4", "mark"));
 
         assertEquals("Task 0 does not exist. Choose a number from 1 to 3.",
                 belowRange.getMessage());
@@ -54,8 +54,8 @@ public class TaskListTest {
     public void parseIndex_emptyTaskList_throwsEmptyListGuidance() {
         TaskList emptyTasks = new TaskList();
 
-        GoatException exception = assertThrows(GoatException.class,
-                () -> emptyTasks.parseIndex("1", "mark"));
+        GoatException exception = assertThrows(
+                GoatException.class, () -> emptyTasks.parseIndex("1", "mark"));
 
         assertEquals("There are no tasks in the list yet.", exception.getMessage());
     }
