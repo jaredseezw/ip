@@ -12,6 +12,14 @@ public class Goat {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
+    private boolean isExitRequested;
+
+    /**
+     * Creates an application using the default task data file.
+     */
+    public Goat() {
+        this(DATA_FILE_PATH);
+    }
 
     /**
      * Creates an application that stores tasks at the given path.
@@ -40,68 +48,86 @@ public class Goat {
         while (ui.hasNextCommand()) {
             String input = ui.readCommand();
             ui.showLine();
-            try {
-                ParsedCommand command = Parser.parse(input);
-                if (execute(command)) {
-                    ui.showGoodbye();
-                    ui.showLine();
-                    return;
-                }
-            } catch (GoatException exception) {
-                ui.showError(exception.getMessage());
-            } catch (IOException exception) {
-                ui.showError("I couldn't save your tasks: " + exception.getMessage()
-                        + " Your task list was not changed.");
-            }
+            ui.showResponse(getResponse(input));
             ui.showLine();
+            if (isExitRequested) {
+                return;
+            }
         }
     }
 
     /**
-     * Executes one parsed command.
+     * Returns the greeting and any warning raised while loading saved tasks.
+     *
+     * @return startup message
      */
-    private boolean execute(ParsedCommand command) throws GoatException, IOException {
+    public String getWelcomeMessage() {
+        return ui.getWelcomeMessage();
+    }
+
+    /**
+     * Processes one command and returns the response for either user interface.
+     *
+     * @param input raw command entered by the user
+     * @return response to display
+     */
+    public String getResponse(String input) {
+        try {
+            return execute(Parser.parse(input));
+        } catch (GoatException exception) {
+            return ui.formatError(exception.getMessage());
+        } catch (IOException exception) {
+            return ui.formatError("I couldn't save your tasks: " + exception.getMessage()
+                    + " Your task list was not changed.");
+        }
+    }
+
+    /**
+     * Returns whether the most recent command requested that the application close.
+     *
+     * @return whether exit was requested
+     */
+    public boolean isExitRequested() {
+        return isExitRequested;
+    }
+
+    /**
+     * Executes one parsed command and returns its response.
+     */
+    private String execute(ParsedCommand command) throws GoatException, IOException {
         switch (command.type()) {
             case BYE:
                 Parser.requireNoArgument(command);
-                return true;
+                isExitRequested = true;
+                return ui.getGoodbyeMessage();
             case LIST:
                 Parser.requireNoArgument(command);
-                ui.showTaskList(tasks);
-                break;
+                return ui.formatTaskList(tasks);
             case MARK:
-                updateCompletion(command.argument(), command.commandWord(), true);
-                break;
+                return updateCompletion(command.argument(), command.commandWord(), true);
             case UNMARK:
-                updateCompletion(command.argument(), command.commandWord(), false);
-                break;
+                return updateCompletion(command.argument(), command.commandWord(), false);
             case DELETE:
-                deleteTask(command.argument(), command.commandWord());
-                break;
+                return deleteTask(command.argument(), command.commandWord());
             case TODO:
-                addTask(Parser.parseTodo(command.argument()));
-                break;
+                return addTask(Parser.parseTodo(command.argument()));
             case DEADLINE:
-                addTask(Parser.parseDeadline(command.argument()));
-                break;
+                return addTask(Parser.parseDeadline(command.argument()));
             case EVENT:
-                addTask(Parser.parseEvent(command.argument()));
-                break;
+                return addTask(Parser.parseEvent(command.argument()));
             case FIND:
-                ui.showMatchingTasks(tasks.find(Parser.parseKeyword(command.argument())));
-                break;
+                return ui.formatMatchingTasks(tasks.find(Parser.parseKeyword(command.argument())));
             case UNKNOWN:
                 throw Parser.unknownCommandException();
             default:
                 throw Parser.unknownCommandException();
         }
-        return false;
     }
 
     /**
      * Adds and saves a task, rolling back if saving fails.
      */
-    private void addTask(Task task) throws IOException {
+    private String addTask(Task task) throws IOException {
         tasks.add(task);
         try {
             storage.save(tasks.asList());
@@ -109,13 +135,13 @@ public class Goat {
             tasks.delete(tasks.size() - 1);
             throw exception;
         }
-        ui.showTaskAdded(task, tasks.size());
+        return ui.formatTaskAdded(task, tasks.size());
     }
 
     /**
      * Changes and saves a task's completion state, rolling back if saving fails.
      */
-    private void updateCompletion(String argument, String commandWord, boolean isDone)
+    private String updateCompletion(String argument, String commandWord, boolean isDone)
             throws GoatException, IOException {
         int index = tasks.parseIndex(argument, commandWord);
         Task task = tasks.get(index);
@@ -136,13 +162,13 @@ public class Goat {
             }
             throw exception;
         }
-        ui.showCompletionChanged(task, isDone);
+        return ui.formatCompletionChanged(task, isDone);
     }
 
     /**
      * Deletes and saves a task, restoring it if saving fails.
      */
-    private void deleteTask(String argument, String commandWord)
+    private String deleteTask(String argument, String commandWord)
             throws GoatException, IOException {
         int index = tasks.parseIndex(argument, commandWord);
         Task deletedTask = tasks.delete(index);
@@ -152,7 +178,7 @@ public class Goat {
             tasks.add(index, deletedTask);
             throw exception;
         }
-        ui.showTaskDeleted(deletedTask, tasks.size());
+        return ui.formatTaskDeleted(deletedTask, tasks.size());
     }
 
     /**
@@ -161,6 +187,6 @@ public class Goat {
      * @param args command-line arguments, which are not used
      */
     public static void main(String[] args) {
-        new Goat(DATA_FILE_PATH).run();
+        new Goat().run();
     }
 }
