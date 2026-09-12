@@ -80,4 +80,14 @@ public class TaskListTest {
 
         assertEquals(0, matches.size());
     }
+
+    @Test
+    public void get_indexOutsideList_assertionError() {
+        assertThrows(AssertionError.class, () -> tasks.get(tasks.size()));
+    }
+
+    @Test
+    public void add_nullTask_assertionError() {
+        assertThrows(AssertionError.class, () -> tasks.add(null));
+    }
 }
