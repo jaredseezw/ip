@@ -122,11 +122,7 @@ public class Ui {
      * @return formatted task list
      */
     public String formatTaskList(TaskList tasks) {
-        StringBuilder result = new StringBuilder("Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            result.append("\n").append(i + 1).append(".").append(tasks.get(i));
-        }
-        return result.toString();
+        return formatTasks("Here are the tasks in your list:", tasks);
     }
 
     /**
@@ -136,7 +132,14 @@ public class Ui {
      * @return formatted matching tasks
      */
     public String formatMatchingTasks(TaskList tasks) {
-        StringBuilder result = new StringBuilder("Here are the matching tasks in your list:");
+        return formatTasks("Here are the matching tasks in your list:", tasks);
+    }
+
+    /**
+     * Formats a heading followed by one-based task entries.
+     */
+    private String formatTasks(String heading, TaskList tasks) {
+        StringBuilder result = new StringBuilder(heading);
         for (int i = 0; i < tasks.size(); i++) {
             result.append("\n").append(i + 1).append(".").append(tasks.get(i));
         }
@@ -190,73 +193,4 @@ public class Ui {
         return "Bye. Hope to see you again soon!";
     }
 
-    /**
-     * Displays all tasks with one-based numbering.
-     *
-     * @param tasks tasks to display
-     */
-    public void showTaskList(TaskList tasks) {
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + tasks.get(i));
-        }
-    }
-
-    /**
-     * Displays tasks that matched a search keyword.
-     *
-     * @param tasks matching tasks to display
-     */
-    public void showMatchingTasks(TaskList tasks) {
-        System.out.println("Here are the matching tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + tasks.get(i));
-        }
-    }
-
-    /**
-     * Displays confirmation that a task was added.
-     *
-     * @param task added task
-     * @param taskCount resulting task count
-     */
-    public void showTaskAdded(Task task, int taskCount) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
-    }
-
-    /**
-     * Displays confirmation that a task was deleted.
-     *
-     * @param task deleted task
-     * @param taskCount resulting task count
-     */
-    public void showTaskDeleted(Task task, int taskCount) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println("  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
-    }
-
-    /**
-     * Displays confirmation that a task's completion state changed.
-     *
-     * @param task changed task
-     * @param isDone new completion state
-     */
-    public void showCompletionChanged(Task task, boolean isDone) {
-        if (isDone) {
-            System.out.println("Nice! I've marked this task as done:");
-        } else {
-            System.out.println("OK, I've marked this task as not done yet:");
-        }
-        System.out.println("  " + task);
-    }
-
-    /**
-     * Displays the exit message.
-     */
-    public void showGoodbye() {
-        System.out.println("Bye. Hope to see you again soon!");
-    }
 }
