@@ -31,11 +31,11 @@ ____________________________________________________________
 | |  _ / _ \ / _` | __|
 | |_| | (_) | (_| | |_
  \____|\___/ \__,_|\__|
-Hello! I'm Goat.
-What can I do for you?
+Hello! I'm Goat, your sure-footed task buddy.
+Let's climb that task list together!
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Time to hoof it. See you on the next climb!
 ____________________________________________________________
 ```
 
@@ -68,31 +68,31 @@ ____________________________________________________________
 | |  _ / _ \ / _` | __|
 | |_| | (_) | (_| | |_
  \____|\___/ \__,_|\__|
-Hello! I'm Goat.
-What can I do for you?
+Hello! I'm Goat, your sure-footed task buddy.
+Let's climb that task list together!
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [T][ ] borrow book
-Now you have 1 tasks in the list.
+Now you have 1 task in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [D][ ] return book (by: Aug 30 2026)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [E][ ] project meeting (from: Sep 01 2026 to: Sep 02 2026)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [D][ ] do homework (by: Oct 15 2026)
 Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Baa-rilliant! I've marked this task as done:
   [D][X] return book (by: Aug 30 2026)
 ____________________________________________________________
 ____________________________________________________________
@@ -103,7 +103,7 @@ Here are the tasks in your list:
 4.[D][ ] do homework (by: Oct 15 2026)
 ____________________________________________________________
 ____________________________________________________________
-OK, I've marked this task as not done yet:
+Back on the trail! I've marked this task as not done yet:
   [D][ ] return book (by: Aug 30 2026)
 ____________________________________________________________
 ____________________________________________________________
@@ -114,7 +114,7 @@ Here are the tasks in your list:
 4.[D][ ] do homework (by: Oct 15 2026)
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Time to hoof it. See you on the next climb!
 ____________________________________________________________
 ```
 
@@ -151,35 +151,35 @@ ____________________________________________________________
 | |  _ / _ \ / _` | __|
 | |_| | (_) | (_| | |_
  \____|\___/ \__,_|\__|
-Hello! I'm Goat.
-What can I do for you?
+Hello! I'm Goat, your sure-footed task buddy.
+Let's climb that task list together!
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [T][ ] first task
-Now you have 1 tasks in the list.
+Now you have 1 task in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [D][ ] second task (by: Sep 04 2026)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [E][ ] third task (from: Sep 07 2026 to: Sep 08 2026)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [T][ ] fourth task
 Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Baa-rilliant! I've marked this task as done:
   [D][X] second task (by: Sep 04 2026)
 ____________________________________________________________
 ____________________________________________________________
-Noted. I've removed this task:
+One less climb! I've removed this task:
   [E][ ] third task (from: Sep 07 2026 to: Sep 08 2026)
 Now you have 3 tasks in the list.
 ____________________________________________________________
@@ -190,7 +190,7 @@ Here are the tasks in your list:
 3.[T][ ] fourth task
 ____________________________________________________________
 ____________________________________________________________
-Noted. I've removed this task:
+One less climb! I've removed this task:
   [T][ ] first task
 Now you have 2 tasks in the list.
 ____________________________________________________________
@@ -200,12 +200,12 @@ Here are the tasks in your list:
 2.[T][ ] fourth task
 ____________________________________________________________
 ____________________________________________________________
-Noted. I've removed this task:
+One less climb! I've removed this task:
   [T][ ] fourth task
-Now you have 1 tasks in the list.
+Now you have 1 task in the list.
 ____________________________________________________________
 ____________________________________________________________
-Noted. I've removed this task:
+One less climb! I've removed this task:
   [D][X] second task (by: Sep 04 2026)
 Now you have 0 tasks in the list.
 ____________________________________________________________
@@ -213,7 +213,7 @@ ____________________________________________________________
 Here are the tasks in your list:
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Time to hoof it. See you on the next climb!
 ____________________________________________________________
 ```
 
@@ -246,31 +246,31 @@ ____________________________________________________________
 | |  _ / _ \ / _` | __|
 | |_| | (_) | (_| | |_
  \____|\___/ \__,_|\__|
-Hello! I'm Goat.
-What can I do for you?
+Hello! I'm Goat, your sure-footed task buddy.
+Let's climb that task list together!
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [T][ ] read book
-Now you have 1 tasks in the list.
+Now you have 1 task in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [D][ ] return book (by: Sep 05 2026)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [E][ ] book club (from: Sep 06 2026 to: Sep 07 2026)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [T][ ] finish homework
 Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Baa-rilliant! I've marked this task as done:
   [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
@@ -287,7 +287,7 @@ ____________________________________________________________
 Here are the matching tasks in your list:
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Time to hoof it. See you on the next climb!
 ____________________________________________________________
 ```
 
@@ -309,6 +309,7 @@ deadline submit assignment
 deadline /by 2026-09-05
 deadline submit assignment /by
 deadline submit assignment /by Friday
+deadline submit assignment /by 2026-09-05 /by 2026-09-06
 deadline submit assignment /by 2026-09-05
 event meeting
 event /from 2026-09-06 /to 2026-09-07
@@ -316,6 +317,9 @@ event meeting /from /to 2026-09-07
 event meeting /from 2026-09-06 /to
 event meeting /from Monday /to 2026-09-07
 event meeting /from 2026-09-06 /to not-a-date
+event meeting /from 2026-09-07 /to 2026-09-07
+event meeting /from 2026-09-08 /to 2026-09-07
+event meeting /from 2026-09-06 /from 2026-09-07 /to 2026-09-08
 event meeting /from 2026-09-06 /to 2026-09-07
 mark
 mark two
@@ -342,8 +346,8 @@ ____________________________________________________________
 | |  _ / _ \ / _` | __|
 | |_| | (_) | (_| | |_
  \____|\___/ \__,_|\__|
-Hello! I'm Goat.
-What can I do for you?
+Hello! I'm Goat, your sure-footed task buddy.
+Let's climb that task list together!
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! Please enter a command.
@@ -358,12 +362,12 @@ ____________________________________________________________
 OOPS!!! A todo needs a description. Try: todo <description>
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Hoof-tastic! I've added this task:
   [T][ ] read book
-Now you have 1 tasks in the list.
+Now you have 1 task in the list.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! Use this format: deadline <description> /by <yyyy-MM-dd>
+OOPS!!! Use exactly one /by: deadline <description> /by <yyyy-MM-dd>
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! A deadline needs a description before /by.
@@ -375,12 +379,15 @@ ____________________________________________________________
 OOPS!!! The deadline date must be a valid date in yyyy-MM-dd format.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+OOPS!!! Use exactly one /by: deadline <description> /by <yyyy-MM-dd>
+____________________________________________________________
+____________________________________________________________
+Hoof-tastic! I've added this task:
   [D][ ] submit assignment (by: Sep 05 2026)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! Use this format: event <description> /from <start date> /to <end date>
+OOPS!!! Use exactly one /from and one /to: event <description> /from <start date> /to <end date>
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! An event needs a description before /from.
@@ -398,7 +405,16 @@ ____________________________________________________________
 OOPS!!! The event end date must be a valid date in yyyy-MM-dd format.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+OOPS!!! An event must start before it ends.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! An event must start before it ends.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! Use exactly one /from and one /to: event <description> /from <start date> /to <end date>
+____________________________________________________________
+____________________________________________________________
+Hoof-tastic! I've added this task:
   [E][ ] meeting (from: Sep 06 2026 to: Sep 07 2026)
 Now you have 3 tasks in the list.
 ____________________________________________________________
@@ -427,11 +443,11 @@ ____________________________________________________________
 OOPS!!! Task 4 does not exist. Choose a number from 1 to 3.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Baa-rilliant! I've marked this task as done:
   [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
-OK, I've marked this task as not done yet:
+Back on the trail! I've marked this task as not done yet:
   [T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
@@ -447,6 +463,6 @@ Here are the tasks in your list:
 3.[E][ ] meeting (from: Sep 06 2026 to: Sep 07 2026)
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Time to hoof it. See you on the next climb!
 ____________________________________________________________
 ```

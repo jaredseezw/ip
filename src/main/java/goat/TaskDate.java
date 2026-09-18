@@ -40,4 +40,19 @@ public final class TaskDate {
     public static String format(LocalDate date) {
         return date.format(DISPLAY_FORMATTER);
     }
+
+    /**
+     * Ensures that a date range progresses forwards in time.
+     *
+     * @param start first date in the range
+     * @param end last date in the range
+     * @param subject name used in the error message
+     * @throws GoatException if the start is the same as or later than the end
+     */
+    public static void requireStartBeforeEnd(LocalDate start, LocalDate end, String subject)
+            throws GoatException {
+        if (!start.isBefore(end)) {
+            throw new GoatException(subject + " must start before it ends.");
+        }
+    }
 }

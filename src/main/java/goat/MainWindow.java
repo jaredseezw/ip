@@ -59,9 +59,12 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = goat.getResponse(input);
+        DialogBox responseDialog = response.startsWith("OOPS!!!")
+                ? DialogBox.getErrorDialog(response, goatImage)
+                : DialogBox.getGoatDialog(response, goatImage);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getGoatDialog(response, goatImage));
+                responseDialog);
         userInput.clear();
 
         if (goat.isExitRequested()) {

@@ -36,6 +36,7 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(image);
+        dialog.maxWidthProperty().bind(widthProperty().multiply(0.78));
     }
 
     /**
@@ -57,6 +58,8 @@ public class DialogBox extends HBox {
      */
     public static DialogBox getUserDialog(String text, Image image) {
         DialogBox dialogBox = new DialogBox(text, image);
+        dialogBox.displayPicture.setManaged(false);
+        dialogBox.displayPicture.setVisible(false);
         dialogBox.getStyleClass().add("user-dialog");
         return dialogBox;
     }
@@ -72,6 +75,19 @@ public class DialogBox extends HBox {
         DialogBox dialogBox = new DialogBox(text, image);
         dialogBox.flip();
         dialogBox.getStyleClass().add("goat-dialog");
+        return dialogBox;
+    }
+
+    /**
+     * Creates a left-aligned, attention-grabbing error dialog from Goat.
+     *
+     * @param text error response
+     * @param image Goat's avatar
+     * @return Goat error dialog
+     */
+    public static DialogBox getErrorDialog(String text, Image image) {
+        DialogBox dialogBox = getGoatDialog(text, image);
+        dialogBox.getStyleClass().add("error-dialog");
         return dialogBox;
     }
 }
