@@ -49,4 +49,58 @@ public class ParserTest {
 
         assertEquals("An event needs an end date after /to.", exception.getMessage());
     }
+
+    @Test
+    public void parseTodo_repeatedWhitespace_normalizesDescription() throws GoatException {
+        Todo todo = Parser.parseTodo("read    the   book");
+
+        assertEquals("[T][ ] read the book", todo.toString());
+    }
+
+    @Test
+    public void parseDeadline_repeatedByMarker_throwsHelpfulException() {
+        GoatException exception = assertThrows(GoatException.class, () ->
+                Parser.parseDeadline("submit /by 2026-10-15 /by 2026-10-16"));
+
+        assertEquals("Use exactly one /by: deadline <description> /by <yyyy-MM-dd>",
+                exception.getMessage());
+    }
+
+    @Test
+    public void parseEvent_repeatedFromMarker_throwsHelpfulException() {
+        GoatException exception = assertThrows(GoatException.class, () ->
+                Parser.parseEvent(
+                        "meeting /from 2026-09-01 /from 2026-09-02 /to 2026-09-03"));
+
+        assertEquals("Use exactly one /from and one /to: "
+                + "event <description> /from <start date> /to <end date>",
+                exception.getMessage());
+    }
+
+    @Test
+    public void parseEvent_sameStartAndEndDate_throwsHelpfulException() {
+        GoatException exception = assertThrows(GoatException.class, () ->
+                Parser.parseEvent("meeting /from 2026-09-01 /to 2026-09-01"));
+
+        assertEquals("An event must start before it ends.", exception.getMessage());
+    }
+
+    @Test
+    public void parseEvent_startAfterEndDate_throwsHelpfulException() {
+        GoatException exception = assertThrows(GoatException.class, () ->
+                Parser.parseEvent("meeting /from 2026-09-02 /to 2026-09-01"));
+
+        assertEquals("An event must start before it ends.", exception.getMessage());
+    }
+
+    @Test
+    public void requireNoArgument_argumentPresent_throwsHelpfulException() throws GoatException {
+        ParsedCommand command = Parser.parse("list now");
+
+        GoatException exception = assertThrows(
+                GoatException.class, () -> Parser.requireNoArgument(command));
+
+        assertEquals("I don't recognise that command. Try todo, deadline, event, list, "
+                + "find, mark, unmark, delete, or bye.", exception.getMessage());
+    }
 }

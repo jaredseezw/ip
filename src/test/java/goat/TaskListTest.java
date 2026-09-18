@@ -2,6 +2,7 @@ package goat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -89,5 +90,29 @@ public class TaskListTest {
     @Test
     public void add_nullTask_assertionError() {
         assertThrows(AssertionError.class, () -> tasks.add(null));
+    }
+
+    @Test
+    public void addAndDelete_validTasks_preservesExpectedOrder() {
+        TaskList editableTasks = new TaskList();
+        editableTasks.add(new Todo("first"));
+        editableTasks.add(new Todo("third"));
+        editableTasks.add(1, new Todo("second"));
+
+        Task deletedTask = editableTasks.delete(0);
+
+        assertEquals("[T][ ] first", deletedTask.toString());
+        assertEquals("[T][ ] second", editableTasks.get(0).toString());
+        assertEquals("[T][ ] third", editableTasks.get(1).toString());
+    }
+
+    @Test
+    public void asList_returnedSnapshotCannotModifyTaskList() {
+        List<Task> snapshot = tasks.asList();
+
+        assertThrows(UnsupportedOperationException.class, () ->
+                snapshot.add(new Todo("fourth")));
+        assertEquals(3, tasks.size());
+        assertTrue(snapshot.contains(tasks.get(0)));
     }
 }
