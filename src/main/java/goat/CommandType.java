@@ -18,6 +18,8 @@ public enum CommandType {
     LIST("list"),
     /** Mark-task command. */
     MARK("mark"),
+    /** Sort-tasks command. */
+    SORT("sort"),
     /** Add-todo command. */
     TODO("todo"),
     /** Unmark-task command. */

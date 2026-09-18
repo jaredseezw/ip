@@ -151,7 +151,7 @@ public final class Parser {
      */
     public static GoatException unknownCommandException() {
         return new GoatException("I don't recognise that command. Try todo, deadline, event, "
-                + "list, find, mark, unmark, delete, or bye.");
+                + "list, find, sort, mark, unmark, delete, or bye.");
     }
 
     /**

@@ -105,6 +105,9 @@ public class Goat {
                 return ui.formatTaskList(tasks);
             case MARK:
                 return updateCompletion(command.argument(), command.commandWord(), true);
+            case SORT:
+                Parser.requireNoArgument(command);
+                return sortTasks();
             case UNMARK:
                 return updateCompletion(command.argument(), command.commandWord(), false);
             case DELETE:
@@ -179,6 +182,16 @@ public class Goat {
             throw exception;
         }
         return ui.formatTaskDeleted(deletedTask, tasks.size());
+    }
+
+    /**
+     * Saves tasks in chronological order, then adopts that order in memory.
+     */
+    private String sortTasks() throws IOException {
+        TaskList sortedTasks = tasks.sortedChronologically();
+        storage.save(sortedTasks.asList());
+        tasks.replaceWith(sortedTasks);
+        return ui.formatSortedTasks(tasks);
     }
 
     /**

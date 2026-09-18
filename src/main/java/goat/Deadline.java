@@ -1,6 +1,7 @@
 package goat;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * Represents a task that must be completed by a specified date.
@@ -28,6 +29,16 @@ public class Deadline extends Task {
     @Override
     public String toFileString() {
         return formatFileData("D", dueDate.toString());
+    }
+
+    /**
+     * Uses the due date when sorting deadlines chronologically.
+     *
+     * @return deadline due date
+     */
+    @Override
+    public Optional<LocalDate> getSchedulingDate() {
+        return Optional.of(dueDate);
     }
 
     /**

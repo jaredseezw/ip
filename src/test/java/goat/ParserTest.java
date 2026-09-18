@@ -19,6 +19,14 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_sortCommand_recognizesSortType() throws GoatException {
+        ParsedCommand command = Parser.parse("sort");
+
+        assertEquals(CommandType.SORT, command.type());
+        assertEquals("", command.argument());
+    }
+
+    @Test
     public void parse_emptyInput_throwsHelpfulException() {
         GoatException exception = assertThrows(GoatException.class, () -> Parser.parse("   "));
 
@@ -101,6 +109,6 @@ public class ParserTest {
                 GoatException.class, () -> Parser.requireNoArgument(command));
 
         assertEquals("I don't recognise that command. Try todo, deadline, event, list, "
-                + "find, mark, unmark, delete, or bye.", exception.getMessage());
+                + "find, sort, mark, unmark, delete, or bye.", exception.getMessage());
     }
 }

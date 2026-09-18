@@ -1,6 +1,7 @@
 package goat;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * Represents a task that occurs between specified start and end dates.
@@ -32,6 +33,16 @@ public class Event extends Task {
     @Override
     public String toFileString() {
         return formatFileData("E", startDate.toString(), endDate.toString());
+    }
+
+    /**
+     * Uses the start date when sorting events chronologically.
+     *
+     * @return event start date
+     */
+    @Override
+    public Optional<LocalDate> getSchedulingDate() {
+        return Optional.of(startDate);
     }
 
     /**
