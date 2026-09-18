@@ -291,6 +291,72 @@ Time to hoof it. See you on the next climb!
 ____________________________________________________________
 ```
 
+## Test case: Sort tasks chronologically
+
+### Aim
+
+Verify that `sort` orders dated tasks chronologically, uses descriptions to break date ties, places todos last, and preserves completion state.
+
+### Commands
+
+```text
+todo pack bag
+deadline submit report /by 2026-10-15
+event conference /from 2026-09-20 /to 2026-09-22
+deadline apply /by 2026-09-20
+mark 1
+sort
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+  ____             _
+ / ___| ___   __ _| |_
+| |  _ / _ \ / _` | __|
+| |_| | (_) | (_| | |_
+ \____|\___/ \__,_|\__|
+Hello! I'm Goat, your sure-footed task buddy.
+Let's climb that task list together!
+____________________________________________________________
+____________________________________________________________
+Hoof-tastic! I've added this task:
+  [T][ ] pack bag
+Now you have 1 task in the list.
+____________________________________________________________
+____________________________________________________________
+Hoof-tastic! I've added this task:
+  [D][ ] submit report (by: Oct 15 2026)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Hoof-tastic! I've added this task:
+  [E][ ] conference (from: Sep 20 2026 to: Sep 22 2026)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Hoof-tastic! I've added this task:
+  [D][ ] apply (by: Sep 20 2026)
+Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Baa-rilliant! I've marked this task as done:
+  [T][X] pack bag
+____________________________________________________________
+____________________________________________________________
+All lined up! Dated tasks are chronological, followed by undated tasks:
+1.[D][ ] apply (by: Sep 20 2026)
+2.[E][ ] conference (from: Sep 20 2026 to: Sep 22 2026)
+3.[D][ ] submit report (by: Oct 15 2026)
+4.[T][X] pack bag
+____________________________________________________________
+____________________________________________________________
+Time to hoof it. See you on the next climb!
+____________________________________________________________
+```
+
 ## Test case: Recover from incorrect inputs
 
 ### Aim
@@ -454,7 +520,7 @@ ____________________________________________________________
 OOPS!!! Please specify a keyword. Try: find <keyword>
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! I don't recognise that command. Try todo, deadline, event, list, find, mark, unmark, delete, or bye.
+OOPS!!! I don't recognise that command. Try todo, deadline, event, list, find, sort, mark, unmark, delete, or bye.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:

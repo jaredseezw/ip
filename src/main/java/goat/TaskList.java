@@ -1,12 +1,19 @@
 package goat;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Owns the application's task collection and task-index operations.
  */
 public class TaskList {
+    private static final Comparator<Task> CHRONOLOGICAL_ORDER = Comparator
+            .comparing((Task task) -> task.getSchedulingDate().orElse(LocalDate.MAX))
+            .thenComparing(task -> task.description, String.CASE_INSENSITIVE_ORDER)
+            .thenComparing(task -> task.description);
+
     private final List<Task> tasks;
 
     /**
@@ -96,6 +103,27 @@ public class TaskList {
                 .filter(task -> task.description.contains(keyword))
                 .toList();
         return new TaskList(matches);
+    }
+
+    /**
+     * Returns a new task list ordered by scheduling date and then description.
+     * Dated tasks come first; undated tasks follow in alphabetical order.
+     *
+     * @return sorted task-list copy
+     */
+    public TaskList sortedChronologically() {
+        return new TaskList(tasks.stream().sorted(CHRONOLOGICAL_ORDER).toList());
+    }
+
+    /**
+     * Replaces this list with a snapshot of another task list.
+     *
+     * @param replacement task list whose order and contents should be adopted
+     */
+    public void replaceWith(TaskList replacement) {
+        assert replacement != null : "Replacement task list should not be null";
+        tasks.clear();
+        tasks.addAll(replacement.asList());
     }
 
     /**

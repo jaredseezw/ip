@@ -1,5 +1,8 @@
 package goat;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 /**
  * Represents a task and whether it has been completed.
  */
@@ -42,6 +45,16 @@ public abstract class Task {
      */
     public void markAsNotDone() {
         isDone = false;
+    }
+
+    /**
+     * Returns the date used when chronologically sorting tasks.
+     * Undated tasks return an empty value and are placed after dated tasks.
+     *
+     * @return scheduling date, if this task has one
+     */
+    public Optional<LocalDate> getSchedulingDate() {
+        return Optional.empty();
     }
 
     /**

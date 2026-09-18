@@ -49,6 +49,26 @@ public class GoatTest {
     }
 
     @Test
+    public void getResponse_sort_ordersTasksAndPersistsOrder() {
+        Path dataFile = tempDirectory.resolve("goat.txt");
+        Goat goat = new Goat(dataFile);
+        goat.getResponse("todo undated task");
+        goat.getResponse("deadline later /by 2026-12-20");
+        goat.getResponse("event earlier /from 2026-10-01 /to 2026-10-02");
+
+        String response = goat.getResponse("sort");
+        Goat reloadedGoat = new Goat(dataFile);
+
+        assertTrue(response.indexOf("[E][ ] earlier") < response.indexOf("[D][ ] later"));
+        assertTrue(response.indexOf("[D][ ] later") < response.indexOf("[T][ ] undated task"));
+        String reloadedList = reloadedGoat.getResponse("list");
+        assertTrue(reloadedList.indexOf("[E][ ] earlier")
+                < reloadedList.indexOf("[D][ ] later"));
+        assertTrue(reloadedList.indexOf("[D][ ] later")
+                < reloadedList.indexOf("[T][ ] undated task"));
+    }
+
+    @Test
     public void getResponse_saveFailure_rollsBackAddedTask() throws Exception {
         Path blocker = tempDirectory.resolve("not-a-directory");
         Files.writeString(blocker, "blocks directory creation");

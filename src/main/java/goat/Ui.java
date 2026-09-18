@@ -137,6 +137,17 @@ public class Ui {
     }
 
     /**
+     * Formats confirmation that tasks were arranged chronologically.
+     *
+     * @param tasks tasks in their new order
+     * @return confirmation followed by the sorted task list
+     */
+    public String formatSortedTasks(TaskList tasks) {
+        return formatTasks("All lined up! Dated tasks are chronological, "
+                + "followed by undated tasks:", tasks);
+    }
+
+    /**
      * Formats a heading followed by one-based task entries.
      */
     private String formatTasks(String heading, TaskList tasks) {
