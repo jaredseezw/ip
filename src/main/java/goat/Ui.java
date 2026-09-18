@@ -39,8 +39,8 @@ public class Ui {
     public void showWelcome() {
         showLine();
         System.out.println(BANNER);
-        System.out.println("Hello! I'm Goat.");
-        System.out.println("What can I do for you?");
+        System.out.println("Hello! I'm Goat, your sure-footed task buddy.");
+        System.out.println("Let's climb that task list together!");
         showLine();
         if (pendingLoadWarning != null) {
             showLine();
@@ -55,7 +55,8 @@ public class Ui {
      * @return startup message suitable for the GUI
      */
     public String getWelcomeMessage() {
-        String message = "Hello! I'm Goat.\nWhat can I do for you?";
+        String message = "Hello! I'm Goat, your sure-footed task buddy.\n"
+                + "Let's climb that task list together!";
         if (pendingLoadWarning != null) {
             message += "\n\nOOPS!!! " + pendingLoadWarning;
         }
@@ -154,8 +155,8 @@ public class Ui {
      * @return formatted confirmation
      */
     public String formatTaskAdded(Task task, int taskCount) {
-        return "Got it. I've added this task:\n  " + task
-                + "\nNow you have " + taskCount + " tasks in the list.";
+        return "Hoof-tastic! I've added this task:\n  " + task
+                + "\nNow you have " + formatTaskCount(taskCount) + " in the list.";
     }
 
     /**
@@ -166,8 +167,8 @@ public class Ui {
      * @return formatted confirmation
      */
     public String formatTaskDeleted(Task task, int taskCount) {
-        return "Noted. I've removed this task:\n  " + task
-                + "\nNow you have " + taskCount + " tasks in the list.";
+        return "One less climb! I've removed this task:\n  " + task
+                + "\nNow you have " + formatTaskCount(taskCount) + " in the list.";
     }
 
     /**
@@ -179,9 +180,9 @@ public class Ui {
      */
     public String formatCompletionChanged(Task task, boolean isDone) {
         if (isDone) {
-            return "Nice! I've marked this task as done:\n  " + task;
+            return "Baa-rilliant! I've marked this task as done:\n  " + task;
         }
-        return "OK, I've marked this task as not done yet:\n  " + task;
+        return "Back on the trail! I've marked this task as not done yet:\n  " + task;
     }
 
     /**
@@ -190,7 +191,14 @@ public class Ui {
      * @return exit message
      */
     public String getGoodbyeMessage() {
-        return "Bye. Hope to see you again soon!";
+        return "Time to hoof it. See you on the next climb!";
+    }
+
+    /**
+     * Formats a task count using the correct singular or plural noun.
+     */
+    private String formatTaskCount(int taskCount) {
+        return taskCount + (taskCount == 1 ? " task" : " tasks");
     }
 
 }
