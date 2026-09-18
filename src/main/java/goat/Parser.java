@@ -1,5 +1,6 @@
 package goat;
 
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +12,9 @@ public final class Parser {
             Pattern.compile("^(.*?)\\s*/by(?:\\s+(.*))?$");
     private static final Pattern EVENT_ARGUMENTS =
             Pattern.compile("^(.*?)\\s*/from(?:\\s+(.*?))?\\s*/to(?:\\s+(.*))?$");
+    private static final Pattern BY_MARKER = Pattern.compile("(?<!\\S)/by(?!\\S)");
+    private static final Pattern FROM_MARKER = Pattern.compile("(?<!\\S)/from(?!\\S)");
+    private static final Pattern TO_MARKER = Pattern.compile("(?<!\\S)/to(?!\\S)");
 
     private Parser() {
     }
@@ -45,7 +49,7 @@ public final class Parser {
         if (argument.isEmpty()) {
             throw new GoatException("A todo needs a description. Try: todo <description>");
         }
-        return new Todo(argument);
+        return new Todo(normalizeWhitespace(argument));
     }
 
     /**
@@ -56,6 +60,10 @@ public final class Parser {
      * @throws GoatException if required fields are missing or the date is invalid
      */
     public static Deadline parseDeadline(String argument) throws GoatException {
+        if (countMatches(BY_MARKER, argument) != 1) {
+            throw new GoatException("Use exactly one /by: "
+                    + "deadline <description> /by <yyyy-MM-dd>");
+        }
         Matcher matcher = DEADLINE_ARGUMENTS.matcher(argument);
         if (!matcher.matches()) {
             throw new GoatException("Use this format: deadline <description> /by <yyyy-MM-dd>");
@@ -69,7 +77,8 @@ public final class Parser {
         if (by.isEmpty()) {
             throw new GoatException("A deadline needs a date after /by.");
         }
-        return new Deadline(description, TaskDate.parse(by, "The deadline date"));
+        return new Deadline(normalizeWhitespace(description),
+                TaskDate.parse(by, "The deadline date"));
     }
 
     /**
@@ -80,6 +89,11 @@ public final class Parser {
      * @throws GoatException if required fields are missing or either date is invalid
      */
     public static Event parseEvent(String argument) throws GoatException {
+        if (countMatches(FROM_MARKER, argument) != 1
+                || countMatches(TO_MARKER, argument) != 1) {
+            throw new GoatException("Use exactly one /from and one /to: "
+                    + "event <description> /from <start date> /to <end date>");
+        }
         Matcher matcher = EVENT_ARGUMENTS.matcher(argument);
         if (!matcher.matches()) {
             throw new GoatException(
@@ -98,8 +112,10 @@ public final class Parser {
         if (to.isEmpty()) {
             throw new GoatException("An event needs an end date after /to.");
         }
-        return new Event(description, TaskDate.parse(from, "The event start date"),
-                TaskDate.parse(to, "The event end date"));
+        LocalDate startDate = TaskDate.parse(from, "The event start date");
+        LocalDate endDate = TaskDate.parse(to, "The event end date");
+        TaskDate.requireStartBeforeEnd(startDate, endDate, "An event");
+        return new Event(normalizeWhitespace(description), startDate, endDate);
     }
 
     /**
@@ -136,5 +152,19 @@ public final class Parser {
     public static GoatException unknownCommandException() {
         return new GoatException("I don't recognise that command. Try todo, deadline, event, "
                 + "list, find, mark, unmark, delete, or bye.");
+    }
+
+    /**
+     * Counts standalone occurrences of a command marker.
+     */
+    private static long countMatches(Pattern marker, String argument) {
+        return marker.matcher(argument).results().count();
+    }
+
+    /**
+     * Treats repeated whitespace in descriptions as an accidental formatting difference.
+     */
+    private static String normalizeWhitespace(String text) {
+        return text.trim().replaceAll("\\s+", " ");
     }
 }

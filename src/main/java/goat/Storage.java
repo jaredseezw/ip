@@ -6,6 +6,7 @@ import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,11 +90,15 @@ public class Storage {
                 break;
             case "E":
                 requireFieldCount(fields, 5, "event");
-                task = new Event(requireText(fields.get(2), "event description"),
-                        TaskDate.parse(requireText(fields.get(3), "event start date"),
-                                "The saved event start date"),
-                        TaskDate.parse(requireText(fields.get(4), "event end date"),
-                                "The saved event end date"));
+                String description = requireText(fields.get(2), "event description");
+                LocalDate startDate = TaskDate.parse(
+                        requireText(fields.get(3), "event start date"),
+                        "The saved event start date");
+                LocalDate endDate = TaskDate.parse(
+                        requireText(fields.get(4), "event end date"),
+                        "The saved event end date");
+                TaskDate.requireStartBeforeEnd(startDate, endDate, "The saved event");
+                task = new Event(description, startDate, endDate);
                 break;
             default:
                 throw new GoatException("unknown task type '" + fields.get(0) + "'.");
