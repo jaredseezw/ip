@@ -148,7 +148,7 @@ public class Goat {
             throws GoatException, IOException {
         int index = tasks.parseIndex(argument, commandWord);
         Task task = tasks.get(index);
-        boolean previousState = task.isDone;
+        boolean wasDone = task.isDone;
         if (isDone) {
             task.markAsDone();
         } else {
@@ -158,7 +158,7 @@ public class Goat {
         try {
             storage.save(tasks.asList());
         } catch (IOException exception) {
-            if (previousState) {
+            if (wasDone) {
                 task.markAsDone();
             } else {
                 task.markAsNotDone();
